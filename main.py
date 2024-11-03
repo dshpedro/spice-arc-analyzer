@@ -8,17 +8,19 @@ def write_file(filename, data):
         for line in data:
             file.write(f"{line}\n")
 
-def generate_delay_measures(arcs, supply="1", v_out="out"):
+def generate_delay_measures(arcs, arcs_map, supply="1", v_out="out"):
     v_out = "f3_out" # placeholder
     measures = []
     
-    prefix = ".measure trans delay_"
+    prefix = ".measure tran delay_"
     trig_template = "\n+ trig v({}) val={}/2 td={}"
     targ_template = "\n+ targ v({}) val={}/2 td={}"
 
     for arc in arcs:
-        v_in = f"v_in_{next(char for char in arc if char.isalpha())}"
-        td = "1ns"
+        literal = arcs_map[arc]['literal']
+        td = f"{arcs_map[arc]['td']}ns"
+
+        v_in = f"in_{literal}"
 
         trig = trig_template.format(v_in, supply, td)
         targ = targ_template.format(v_out, supply, td)
@@ -30,13 +32,25 @@ def generate_delay_measures(arcs, supply="1", v_out="out"):
 
     return measures
 
+def map_arcs(arcs, interval=1):
+    arcs_map = {}
+    td = -1
+
+    for arc in arcs:
+        literal = next(char for char in arc if char.isalpha())
+        td += 2 * interval
+        arcs_map[arc] = {'literal': literal, 'td': td }
+
+    return arcs_map
+
 def main():
     arcs_file = 'arcs.txt'
     measures_file = 'measures.txt'
     
     arcs = read_file(arcs_file)
-    
-    measures = generate_delay_measures(arcs)
+    arcs_map = map_arcs(arcs)
+
+    measures = generate_delay_measures(arcs, arcs_map)
     write_file(measures_file, measures)
 
 if __name__ == '__main__':
