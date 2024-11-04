@@ -18,8 +18,6 @@ def generate_delay_measures(arcs, arcs_map, supply="1", v_out="out"):
         lh_trig_edge = "rise=1" if polarity == "D" else "fall=1"
         hl_trig_edge = "fall=1" if polarity == "D" else "rise=1"
 
-        print(lh_trig_edge)
-
         v_in = f"in_{literal}"
 
         trig = trig_template.format(v_in, supply, td)
