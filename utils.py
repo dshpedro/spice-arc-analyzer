@@ -10,11 +10,11 @@ def write_file(filename, data):
 
 def map_arcs(arcs, interval=1):
     arcs_map = {}
-    td = -1
+    td = -2
 
     for arc in arcs:
         literal = next(char for char in arc if char.isalpha())
-        td += 2 * interval
+        td += 3 * interval
         arcs_map[arc] = {'literal': literal, 'td': td }
 
     return arcs_map
