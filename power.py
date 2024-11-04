@@ -36,7 +36,7 @@ def main():
     arcs_map = map_arcs(polarized_arcs)
     measures = generate_power_measures(arcs, arcs_map)
 
-    output_filename = 'measures_power.txt'
+    output_filename = 'power.meas'
     write_file(output_filename, measures)
 
 if __name__ == '__main__':

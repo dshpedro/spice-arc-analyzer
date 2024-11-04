@@ -44,7 +44,7 @@ def main():
     arcs_map = map_arcs(polarized_arcs)
     measures = generate_delay_measures(arcs, arcs_map)
 
-    output_filename = 'measures_delay.txt'
+    output_filename = 'delay.meas'
     write_file(output_filename, measures)
 
 if __name__ == '__main__':
