@@ -30,9 +30,10 @@ def main():
         return
 
     arcs_file = sys.argv[1]
-    arcs = read_file(arcs_file)
-    
-    arcs_map = map_arcs(arcs)
+    polarized_arcs = read_file(arcs_file)
+    arcs = [arc[:-1] for arc in polarized_arcs]
+
+    arcs_map = map_arcs(polarized_arcs)
     measures = generate_power_measures(arcs, arcs_map)
 
     output_filename = 'measures_power.txt'

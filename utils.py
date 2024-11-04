@@ -12,10 +12,13 @@ def map_arcs(arcs, interval=1):
     arcs_map = {}
     td = -2
 
-    for arc in arcs:
+    for polarized_arc in arcs:
+        polarity = polarized_arc[-1] # last char is either (D)irect or (R)everse
+        arc = polarized_arc[:-1] # everything but the polarity char
         literal = next(char for char in arc if char.isalpha())
+
         td += 3 * interval
-        arcs_map[arc] = {'literal': literal, 'td': td }
+        arcs_map[arc] = {'literal': literal, 'td': td, 'polarity': polarity}
 
     return arcs_map
 
